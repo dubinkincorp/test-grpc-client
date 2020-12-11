@@ -9,10 +9,10 @@ public class GrpcClient {
     public static void main(String[] args) {
 
         final ManagedChannel managedChannel = ManagedChannelBuilder
-                .forTarget(
-                        "https://mobile-asud-demo.interrao.ru"
+                .forAddress(
+                        "uri",
+                        80
                 )
-                .usePlaintext()
                 .build();
 
         final PingPongGrpc.PingPongBlockingStub stub = PingPongGrpc.newBlockingStub(managedChannel);
