@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package ru.irit.grpctestserver;
+
+service PingPong {
+  rpc testPingPong (Ping) returns (Pong) {}
+}
+
+message Ping {
+  string requestPing = 1;
+}
+
+message Pong {
+  string replyPong = 1;
+}

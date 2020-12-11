@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id "com.google.protobuf" version "0.8.12"
+}
+
+group 'test-grpc'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "io.grpc:grpc-protobuf:1.32.1"
+    implementation "io.grpc:grpc-stub:1.32.1"
+    implementation "com.google.protobuf:protobuf-java-util:3.13.0"
+
+    compileOnly "javax.annotation:javax.annotation-api:1.2"
+    
+    runtimeOnly "io.grpc:grpc-netty-shaded:1.32.1"
+}
+
+idea {
+    module {
+        generatedSourceDirs += file('build/generated/sources/annotationProcessor')
+    }
+}
+
+sourceSets.main.java.srcDir new File(buildDir, 'generated/sources/annotationProcessor')
+
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:3.13.0" }
+    plugins {
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:1.32.1" }
+    }
+    generateProtoTasks {
+        all()*.plugins { grpc {} }
+    }
+}
